@@ -7,8 +7,10 @@ public class Main {
         System.out.println("Hello ouer New Customer");
 
 
-        Customer customer = new Customer("Jan", "Kowlski",
-                "jakkowalski@gmail.com", "+486543798");
+        Customer customer = new Customer("Kowalski", "Kowalski", 40,
+                 "Jagodowa 3",
+                "Polska", 486543798,
+                "jankowalski@gmial.com");
 
         System.out.println(customer);
     }
