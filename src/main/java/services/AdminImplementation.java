@@ -2,24 +2,35 @@ package services;
 
 import models.Flight;
 import services.interfaces.AdminInterface;
+import services.interfaces.MailValidator;
+
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class AdminImplementation {
+public class AdminImplementation extends MailValidator {
     Scanner scanner = new Scanner(System.in);
 
     static Map<String, String> serviceAccounts = new HashMap<>();
 
 
+
     //    @Override
 //
     public void newServiceAccount() throws InvalidEmailException, IOException {
+        String email;
         System.out.println("You entry new Account for Service Customer, please entry an email: ");
-        String email = scanner.nextLine();
-        if (email == null || email.isEmpty()) {
+        validate(email = scanner.nextLine());
+
+//        if(!validate(email)){
+//            throw new InvalidEmailException("Invalid regex");
+//        }
+
+        if (email == null || email.isEmpty() || !validate(email)) {
             throw new InvalidEmailException("Invalid email");
 
 
@@ -37,6 +48,8 @@ public class AdminImplementation {
 
 
     }
+
+
 
     private static void writeToFile() throws IOException {
 
