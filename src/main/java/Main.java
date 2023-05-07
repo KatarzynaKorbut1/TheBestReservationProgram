@@ -11,9 +11,8 @@ public class Main implements Serializable {
 
 
             adminImplementation.newServiceAccount();
-            adminImplementation.newServiceAccount();
-            adminImplementation.printDet();
-            adminImplementation.writeToFile();
+
+
 
         ;
 

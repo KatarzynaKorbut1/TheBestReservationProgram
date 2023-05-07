@@ -1,22 +1,22 @@
 package services;
 
 import models.Flight;
-import models.Service;
 import services.interfaces.AdminInterface;
 
 import java.io.*;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class AdminImplementation  {
     Scanner scanner = new Scanner(System.in);
 
-    Map<String, String> serviceAccounts = new HashMap<>();
+    static Map<String, String> serviceAccounts = new HashMap<>();
 
 
 //    @Override
 //
-    public void newServiceAccount() throws InvalidEmailException {
+    public void newServiceAccount() throws InvalidEmailException, IOException {
         System.out.println("You entry new Account for Service Customer, please entry an email: ");
         String email = scanner.nextLine();
         if (email == null || email.isEmpty()) {
@@ -31,46 +31,30 @@ public class AdminImplementation  {
             throw new RuntimeException("Service account exist!");
         }else {
             serviceAccounts.put(email, password);
+           writeToFile();
         }
             System.out.println(serviceAccounts.entrySet());
 
 
         }
-public void writeToFile () throws IOException {
+private static void writeToFile() throws IOException {
+
+    BufferedReader in = new BufferedReader(new FileReader("serviceAccount.output.txt"));
+
+    List<String> file = Files.readAllLines(Paths.get("C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\serviceAccount.output.txt"));
+//
+
+    BufferedWriter out = new BufferedWriter(new FileWriter("serviceAccount.output.txt"));
 
 
+    Set<Map.Entry<String, String>> serviceAccounsDatas = serviceAccounts.entrySet();
 
-    BufferedReader input = new BufferedReader(new FileReader("cars.txt"));
-    BufferedWriter output = new BufferedWriter(new FileWriter("cars_output.txt"));
 
-    String line;
-    while ((line = input.readLine()) != null){
-        output.write(line);
-        System.out.println(line);
-        System.out.println(line.hashCode());
+        out.write(file.toString() + "\n");
+        out.write(serviceAccounsDatas + "\n");
+
+        out.close();
     }
-    input.close();
-    output.close();
-}
-
-
-
-
-//    try {
-//
-//
-//        FileOutputStream fos = new FileOutputStream("serviceAccount.output.txt");
-//        ObjectOutputStream oos = new ObjectOutputStream(fos);
-//        oos.writeObject(serviceAccounts);
-//        fos.close();
-//        oos.close();
-//
-//
-//    } catch (FileNotFoundException e) {
-//        throw new RuntimeException(e);
-//    } catch (IOException e) {
-//        throw new RuntimeException(e);
-//    }
 
 
 
