@@ -8,13 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class AdminImplementation  {
+public class AdminImplementation {
     Scanner scanner = new Scanner(System.in);
 
     static Map<String, String> serviceAccounts = new HashMap<>();
 
 
-//    @Override
+    //    @Override
 //
     public void newServiceAccount() throws InvalidEmailException, IOException {
         System.out.println("You entry new Account for Service Customer, please entry an email: ");
@@ -29,36 +29,38 @@ public class AdminImplementation  {
 
         if (serviceAccounts.containsKey(email)) {
             throw new RuntimeException("Service account exist!");
-        }else {
+        } else {
             serviceAccounts.put(email, password);
-           writeToFile();
+            writeToFile();
         }
-            System.out.println(serviceAccounts.entrySet());
+        System.out.println(serviceAccounts.entrySet());
 
 
-        }
-private static void writeToFile() throws IOException {
+    }
 
-    BufferedReader in = new BufferedReader(new FileReader("serviceAccount.output.txt"));
+    private static void writeToFile() throws IOException {
 
-    List<String> file = Files.readAllLines(Paths.get("C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\serviceAccount.output.txt"));
+        BufferedReader in = new BufferedReader(new FileReader("serviceAccount.output.txt"));
+
+        List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\serviceAccount.output.txt"));
 //
 
-    BufferedWriter out = new BufferedWriter(new FileWriter("serviceAccount.output.txt"));
+
+        BufferedWriter out = new BufferedWriter(new FileWriter("serviceAccount.output.txt"));
 
 
-    Set<Map.Entry<String, String>> serviceAccounsDatas = serviceAccounts.entrySet();
-
-
-        out.write(file.toString() + "\n");
-        out.write(serviceAccounsDatas + "\n");
+        for (String line : lines) {
+            out.write(line + "\n");
+        }
+        for (String email : serviceAccounts.keySet()) {
+            String password = serviceAccounts.get(email);
+            out.write(email + "=" + password);
+        }
 
         out.close();
     }
 
-
-
-//        @Override
+    //        @Override
     public void addFlightToDatabase(Flight flight) {
 
     }
