@@ -1,43 +1,61 @@
 package services;
 
 import models.Flight;
-import services.interfaces.AdminInterface;
-import services.interfaces.MailValidator;
+import services.interfaces.ProcessCommand;
 
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class AdminImplementation extends MailValidator {
+public class AdminImplementation extends PasswordValidator implements ProcessCommand {
     Scanner scanner = new Scanner(System.in);
+    private boolean done = false;
+
+
 
     static Map<String, String> serviceAccounts = new HashMap<>();
 
 
-
     //    @Override
 //
-    public void newServiceAccount() throws InvalidEmailException, IOException {
+
+    public void runAdmin() {
+        while (!done) {
+
+            System.out.println("Enter command (1 - Login)");
+
+            int cmd = scanner.nextInt();
+            processCommand(cmd);
+        }
+    }
+
+    @Override
+    public void processCommand(int cmd) {
+
+    }
+
+    public void newServiceAccount() throws InvalidEmailException, IOException, InvalidPasswordException {
+
         String email;
+
         System.out.println("You entry new Account for Service Customer, please entry an email: ");
-        validate(email = scanner.nextLine());
+        emailValidate(email = scanner.nextLine());
 
-//        if(!validate(email)){
-//            throw new InvalidEmailException("Invalid regex");
-//        }
-
-        if (email == null || email.isEmpty() || !validate(email)) {
+        if (email == null || email.isEmpty() || !emailValidate(email)) {
             throw new InvalidEmailException("Invalid email");
-
 
         }
         System.out.println("Entry password for Customer Service account: ");
-        String password = scanner.nextLine();
+        System.out.println("Your password schould have min. 8 chars, one digit, one lower alpha char and one upper alpha char, \n one char within a set of special chars (@#%$^ etc.),Does not contain space, tab, etc");
+        String password;
 
+        passwordValidate(password = scanner.nextLine());
+
+        if (!passwordValidate(password)) {
+            throw new InvalidPasswordException("Invalid password");
+        }
         if (serviceAccounts.containsKey(email)) {
             throw new RuntimeException("Service account exist!");
         } else {
@@ -46,10 +64,7 @@ public class AdminImplementation extends MailValidator {
         }
         System.out.println(serviceAccounts.entrySet());
 
-
     }
-
-
 
     private static void writeToFile() throws IOException {
 
@@ -57,7 +72,6 @@ public class AdminImplementation extends MailValidator {
 
         List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\serviceAccount.output.txt"));
 //
-
 
         BufferedWriter out = new BufferedWriter(new FileWriter("serviceAccount.output.txt"));
 
@@ -82,6 +96,8 @@ public class AdminImplementation extends MailValidator {
 
         serviceAccounts.entrySet().forEach(System.out::println);
     }
+
+
 }
 
 
