@@ -1,7 +1,5 @@
 package models;
 
-import java.util.Date;
-
 public class Customer {
 
     private String firstName;
@@ -94,4 +92,5 @@ public class Customer {
                 ", email='" + email + '\'' +
                 '}';
     }
+
 }
