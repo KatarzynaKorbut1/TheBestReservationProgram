@@ -1,6 +1,7 @@
 package models;
 
 public class Flight {
+
     private enum planeModel{
         BOEING737,
        BOEING777,
@@ -45,3 +46,5 @@ public class Flight {
         this.numberOfFlight = numberOfFlight;
     }
     }
+
+}
