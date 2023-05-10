@@ -2,7 +2,7 @@ package models;
 
 public class Flight {
 
-    private enum planeModel{
+    public enum planeModel{
         BOEING737,
        BOEING777,
        BOEING787,
@@ -47,4 +47,4 @@ public class Flight {
     }
     }
 
-}
+
