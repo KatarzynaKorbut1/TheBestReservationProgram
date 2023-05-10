@@ -15,7 +15,7 @@ public class Ticket implements TicketService {
     private String seatNumber;
     private boolean premiumSeat;
     private boolean priorityCheckIn;
-        enum luggageSize{
+        public enum luggageSize{
         LACK(0,0,0),
         SMALL(10, 60, 40),
         LARGE(20, 150, 50);
@@ -135,3 +135,4 @@ public class Ticket implements TicketService {
         return priorityCheckIn;
     }
 }
+
