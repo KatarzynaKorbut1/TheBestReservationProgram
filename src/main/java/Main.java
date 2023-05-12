@@ -1,3 +1,4 @@
+import models.UserApp;
 import services.AdminImplementation;
 import services.InvalidEmailException;
 import services.InvalidPasswordException;
@@ -9,9 +10,13 @@ public class Main implements Serializable {
     public static void main(String[] args) throws InvalidEmailException, IOException, ClassNotFoundException, InvalidPasswordException {
 
 
-        AdminImplementation adminImplementation = new AdminImplementation();
 
-        adminImplementation.newServiceAccount();
+        //AdminImplementation adminImplementation = new AdminImplementation();
+
+        //adminImplementation.newServiceAccount();
+
+        UserApp userApp = new UserApp();
+        userApp.loginUser();
 
 
 

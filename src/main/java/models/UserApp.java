@@ -1,8 +1,7 @@
 package models;
 
-import services.InvalidEmailException;
-import services.InvalidPasswordException;
-import services.MailValidator;
+import services.*;
+import services.interfaces.CustomerImplementation;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,39 +16,40 @@ public class UserApp {
     private String password;
     Scanner scanner = new Scanner(System.in);
 
-    public void loginUser(String email, String password) throws InvalidEmailException, InvalidPasswordException, IOException {
+    //TODO
+    // Metoda uruchomieniowa ogólna public void run(){} wywołująca jedną z dwóch metod
+    // rejestracja lub logowanie
+
+    public void loginUser() throws InvalidEmailException, InvalidPasswordException, IOException {
         System.out.println("Podaj maila");
         email = scanner.nextLine();
         BufferedReader in = new BufferedReader(new FileReader("serviceAccount.output.txt"));
         List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\serviceAccount.output.txt"));
         for (String line : lines) {
-            if (line.contains(email) || line.contains("USER")) {
-                runUserProgram();
-            } else if (line.contains(email) || line.contains("ADMIN")) {
-                runAdminProgram();
+            if (line.contains(email) /*|| line.contains("USER")*/) {
+                                runAdminProgram();
+            } else if (line.contains(email) /*|| line.contains("ADMIN")*/) {
+                runCustomerProgram();
             } else if (line.contains(email) || line.contains("SERVICE")) {
                 runServiceProgram();
             }
-            // if (email == null || email.isEmpty() || this.email != email) {
-            //    throw new InvalidEmailException("Invalid email");
-//        } else {
-//            System.out.println("Podaj hasło");
-//            password = scanner.nextLine();
-//            if (password == null || password.isEmpty() || this.password != password) {
-//                throw new InvalidPasswordException("Invalid password");
-//            } else {
-
 
         }
     }
 
-    private void runServiceProgram() {
+    private void runServiceProgram() throws InvalidPasswordException, IOException, InvalidEmailException {
+        ServiceImplementation serviceImplementation = new ServiceImplementation();
+        serviceImplementation.runServiceProgram();
     }
 
-    private void runAdminProgram() {
+    private void runAdminProgram() throws InvalidPasswordException, IOException, InvalidEmailException {
+        AdminImplementation adminImplementation = new AdminImplementation();
+        adminImplementation.runAdminProgram();
     }
 
-    private void runUserProgram() {
+    private void runCustomerProgram() {
+        CustomerImplementation customerImplementation = new CustomerImplementation();
+        customerImplementation.runCustomerProgram();
     }
 }
 

@@ -17,6 +17,10 @@ public class CustomerImplementation {
     Scanner scanner = new Scanner(System.in);
     static Map<String, String> customerAccounts = new HashMap<>();
 
+    public void runCustomerProgram (){
+
+    }
+
     public void newCustomerAccount() throws InvalidEmailException, IOException {
         System.out.println("You are Registering to The Best Reservation Program, please entry an email: ");
         String email = scanner.nextLine();
