@@ -1,0 +1,38 @@
+//package services;
+//
+//import java.util.Scanner;
+//import java.util.regex.Matcher;
+//import java.util.regex.Pattern;
+//
+//public class MailValidator {
+//
+
+
+//    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+//                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+//
+//        public static boolean validate (String emailStr){
+//            Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+//            if (!matcher.matches()) {
+//                System.out.println("Exception");
+//
+//
+//            }
+//            return matcher.matches();
+//        }
+//    }
+
+
+//    public static boolean validate(String emailStr) {
+//        Pattern pattern = Pattern.compile("[a-zA-Z0-9.]+[@][a-z]+[.][a-z]{2,3}");
+//        Scanner scanner = new Scanner(System.in);
+//        String mail = scanner.next();
+//        Matcher matcher = pattern.matcher(mail);
+//
+//        System.out.println("Czy mail jest poprawny: " + matcher.matches());
+//        if (!matcher.matches()) {
+//            System.out.println("Exception");
+//        }
+//        return matcher.matches();
+////    }
+//}
