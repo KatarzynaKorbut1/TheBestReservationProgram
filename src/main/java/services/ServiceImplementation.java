@@ -1,18 +1,28 @@
 package services;
 
+import models.Flight;
+
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import static java.lang.System.out;
 
 public class ServiceImplementation {
 
     private boolean done = false;
     Scanner scanner = new Scanner(System.in);
 
+    public List<Flight> flightList = new ArrayList<>();
+
 
     public void runServiceProgram() throws InvalidPasswordException, IOException, InvalidEmailException {
         while (!done) {
 
-            System.out.println("Enter command:\n 1 - new Service Account,\n 2 - add flight to database, \n 3 - quit.");
+            out.println("Enter command:\n 1 - ");
             int cmd = scanner.nextInt();
             processCommand(cmd);
         }
@@ -23,13 +33,33 @@ public class ServiceImplementation {
 //        else if (cmd == 2)
 //        else if (cmd == 3)
 //        else
-            System.out.println("Illegal command");
+        out.println("Illegal command");
 
     }
 
     private void quit() {
         done = true;
-        System.out.println("Goodbye!");
+        out.println("Goodbye!");
+    }
+
+
+    public List<Flight> findAllFlight() throws IOException {
+        List<Flight> flightsList = new ArrayList<>();
+
+        List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\flights.txt"));
+        for (String line : lines) {
+            Flight flight = new Flight();
+            String[] variables = line.split(" ");
+            flight.setAirportOfArrival(variables[0]);
+            flight.setAirportOfDeparture(variables[1]);
+            flight.setTimeOfArrival(variables[2]);
+            flight.setTimeOfDeparture(variables[3]);
+            flight.setNumberOfFlight(variables[4]);
+            flightsList.add(flight);
+
+        }
+
+        return flightsList;
     }
 
 
