@@ -77,6 +77,7 @@ public class AdminImplementation {
             writeToFile();
         }
         System.out.println(serviceAccounts.keySet());
+        System.out.println(serviceAccounts.values());
 
     }
 
