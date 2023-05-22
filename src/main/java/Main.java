@@ -1,13 +1,11 @@
-import models.Flight;
 import models.UserApp;
 import services.AdminImplementation;
 import services.InvalidEmailException;
 import services.InvalidPasswordException;
-import services.ServiceImplementation;
+import services.AssistantImplementation;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
 
 public class Main implements Serializable {
     public static void main(String[] args) throws InvalidEmailException, IOException, ClassNotFoundException, InvalidPasswordException {
@@ -15,14 +13,15 @@ public class Main implements Serializable {
 
 
         AdminImplementation adminImplementation = new AdminImplementation();
-        ServiceImplementation serviceImplementation = new ServiceImplementation();
+        AssistantImplementation assistantImplementation = new AssistantImplementation();
 
+        adminImplementation.newAsystentAccount();
             //adminImplementation.addFlightToDatabase();
-        List<Flight> allFlight = serviceImplementation.findAllFlight();
-        System.out.println(allFlight);
+        //List<Flight> allFlight = assistantImplementation.findAllFlight();
+        //System.out.println(allFlight);
 
-//        UserApp userApp = new UserApp();
-//        userApp.loginUser();
+        UserApp userApp = new UserApp();
+        userApp.loginUser();
 
 
 

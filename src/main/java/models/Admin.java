@@ -4,6 +4,7 @@ public class Admin {
 
     private String email;
     private String password;
+    TypeOfUsers typeOfUsers = TypeOfUsers.ADMIN;
 
     public Admin(String email, String password) {
         this.email = email;

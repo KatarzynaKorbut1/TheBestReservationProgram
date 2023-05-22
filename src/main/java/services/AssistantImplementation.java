@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
-public class ServiceImplementation {
+public class AssistantImplementation {
 
     private boolean done = false;
     Scanner scanner = new Scanner(System.in);
@@ -19,7 +19,7 @@ public class ServiceImplementation {
     public List<Flight> flightList = new ArrayList<>();
 
 
-    public void runServiceProgram() throws InvalidPasswordException, IOException, InvalidEmailException {
+    public void runAssistantProgram() throws InvalidPasswordException, IOException, InvalidEmailException {
         while (!done) {
 
             out.println("Enter command:\n 1 - ");

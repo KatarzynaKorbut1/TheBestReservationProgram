@@ -1,6 +1,8 @@
 package services;
 
+import models.Assistant;
 import models.Flight;
+import models.TypeOfUsers;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -16,8 +18,11 @@ public class AdminImplementation {
     PasswordValidator passwordValidator = new PasswordValidator();
 
 
-    static Map<String, String> serviceAccounts = new HashMap<>();
+
+    static Map<String, Assistant> serviceAccounts = new HashMap<>();
     static List<Flight> flights = new ArrayList<>();
+
+
 
 
     public void runAdminProgram() throws InvalidPasswordException, IOException, InvalidEmailException {
@@ -30,7 +35,7 @@ public class AdminImplementation {
     }
 
     private void processCommand(int cmd) throws InvalidPasswordException, IOException, InvalidEmailException {
-        if      (cmd == 1) newServiceAccount();
+        if      (cmd == 1) newAsystentAccount();
         else if (cmd == 2) addFlightToDatabase();
         else if (cmd == 3) quit();
         else
@@ -42,12 +47,12 @@ public class AdminImplementation {
         System.out.println("Goodbye!");
     }
 
-    public void newServiceAccount() throws InvalidEmailException, IOException, InvalidPasswordException {
+    public void newAsystentAccount() throws InvalidEmailException, IOException, InvalidPasswordException {
 
         Scanner scanner = new Scanner(System.in);
         String email;
 
-        System.out.println("You entry new Account for Service Customer, please entry an email: ");
+        System.out.println("You entry new Account for Asystent, please entry an email: ");
 
         email = scanner.nextLine();
 
@@ -55,7 +60,7 @@ public class AdminImplementation {
             throw new InvalidEmailException("Invalid email");
         }
 
-        System.out.println("Entry password for Customer Service account: ");
+        System.out.println("Entry password for Asystent account: ");
         System.out.println("Your password schould have min. 8 chars, one digit, one lower alpha char and one upper alpha char, \n one char within a set of special chars (@#%$^ etc.),Does not contain space, tab, etc");
         String password;
 
@@ -67,16 +72,17 @@ public class AdminImplementation {
         if (serviceAccounts.containsKey(email)) {
             throw new RuntimeException("Service account exist!");
         } else {
-            serviceAccounts.put(email, password);
+
+            serviceAccounts.put(email, new Assistant(password, TypeOfUsers.ASSISTANT));
             writeToFile();
         }
-        System.out.println(serviceAccounts.entrySet());
+        System.out.println(serviceAccounts.keySet());
 
     }
 
     private static void writeToFile() throws IOException {
 
-        BufferedReader in = new BufferedReader(new FileReader("serviceAccount.output.txt"));
+        //BufferedReader in = new BufferedReader(new FileReader("serviceAccount.output.txt"));
 
         List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\serviceAccount.output.txt"));
 //
@@ -88,8 +94,15 @@ public class AdminImplementation {
             out.write(line + "\n");
         }
         for (String email : serviceAccounts.keySet()) {
-            String password = serviceAccounts.get(email);
-            out.write(email + "=" + password);
+            Assistant assistant = new Assistant();
+
+
+            //assistant.getPassword();
+            //assistant.getTypeOfUsers();
+
+
+            //String password = serviceAccounts.get(email);
+            out.write(serviceAccounts.keySet() + " " + serviceAccounts.values() + " " + assistant.getTypeOfUsers());
         }
 
         out.close();
