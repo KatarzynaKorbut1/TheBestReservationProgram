@@ -1,7 +1,7 @@
 package models;
 
 import services.*;
-import services.interfaces.CustomerImplementation;
+import services.CustomerImplementation;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -38,8 +38,8 @@ public class UserApp {
     }
 
     private void runServiceProgram() throws InvalidPasswordException, IOException, InvalidEmailException {
-        ServiceImplementation serviceImplementation = new ServiceImplementation();
-        serviceImplementation.runServiceProgram();
+        AssistantImplementation assistantImplementation = new AssistantImplementation();
+        assistantImplementation.runAssistantProgram();
     }
 
     private void runAdminProgram() throws InvalidPasswordException, IOException, InvalidEmailException {

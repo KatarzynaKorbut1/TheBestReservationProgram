@@ -1,9 +1,5 @@
 package models;
 
-import services.interfaces.TicketService;
-
-import java.util.Scanner;
-
 public class Ticket implements TicketService {
     private String ticket;
     private String ticketNumber;
