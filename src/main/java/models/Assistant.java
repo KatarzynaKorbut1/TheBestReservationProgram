@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Objects;
+
 public class Assistant {
 
     private String email;
@@ -47,5 +49,18 @@ public class Assistant {
     @Override
     public String toString() {
         return String.format("%s",password, getTypeOfUsers());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Assistant assistant = (Assistant) o;
+        return Objects.equals(email, assistant.email) && Objects.equals(password, assistant.password) && typeOfUsers == assistant.typeOfUsers;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, password, typeOfUsers);
     }
 }

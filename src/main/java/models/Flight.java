@@ -1,5 +1,7 @@
 package models;
 
+import java.math.BigDecimal;
+
 public class Flight {
 
     public enum planeModel {
@@ -18,6 +20,8 @@ public class Flight {
     private String timeOfArrival;
     private String timeOfDeparture;
     private String numberOfFlight;
+
+    private BigDecimal priceOfFlight;
 
     public Flight() {
     }
