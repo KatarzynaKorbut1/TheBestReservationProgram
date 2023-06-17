@@ -5,11 +5,13 @@ import models.Flight;
 import models.TypeOfUsers;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
 public class AdminImplementation {
+
     Scanner scanner = new Scanner(System.in);
     private boolean done = false;
 
@@ -17,12 +19,11 @@ public class AdminImplementation {
     MailValidator mailValidator = new MailValidator();
     PasswordValidator passwordValidator = new PasswordValidator();
 
+    private static final Map<String, Assistant> assistantsAccounts = new HashMap<>();
 
 
-    static Map<String, Assistant> serviceAccounts = new HashMap<>();
     static List<Flight> flights = new ArrayList<>();
-
-
+    String email;
 
 
     public void runAdminProgram() throws InvalidPasswordException, IOException, InvalidEmailException {
@@ -35,7 +36,7 @@ public class AdminImplementation {
     }
 
     private void processCommand(int cmd) throws InvalidPasswordException, IOException, InvalidEmailException {
-        if      (cmd == 1) newAsystentAccount();
+        if (cmd == 1) newAsystentAccount();
         else if (cmd == 2) addFlightToDatabase();
         else if (cmd == 3) quit();
         else
@@ -49,8 +50,9 @@ public class AdminImplementation {
 
     public void newAsystentAccount() throws InvalidEmailException, IOException, InvalidPasswordException {
 
+
         Scanner scanner = new Scanner(System.in);
-        String email;
+
 
         System.out.println("You entry new Account for Asystent, please entry an email: ");
 
@@ -68,49 +70,68 @@ public class AdminImplementation {
 
         if (!passwordValidator.passwordValidate(password)) {
             throw new InvalidPasswordException("Invalid password");
+
         }
-        if (serviceAccounts.containsKey(email)) {
+        if (assistantsAccounts.containsKey(email)) {
             throw new RuntimeException("Service account exist!");
         } else {
 
-            serviceAccounts.put(email, new Assistant(password, TypeOfUsers.ASSISTANT));
+            assistantsAccounts.put(email, new Assistant(password, TypeOfUsers.ASSISTANT));
             writeToFile();
         }
-        System.out.println(serviceAccounts.keySet());
-        System.out.println(serviceAccounts.values());
-
     }
 
-    private static void writeToFile() throws IOException {
 
-        //BufferedReader in = new BufferedReader(new FileReader("serviceAccount.output.txt"));
+    private void writeToFile() throws IOException {
+
 
         List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\serviceAccount.output.txt"));
-//
 
+        //BufferedReader in = new BufferedReader(new FileReader("serviceAccount.output.txt"));
         BufferedWriter out = new BufferedWriter(new FileWriter("serviceAccount.output.txt"));
 
-
         for (String line : lines) {
-            out.write(line + "\n");
+            out.write(line + '\n');
         }
-        for (String email : serviceAccounts.keySet()) {
-            Assistant assistant = new Assistant();
+//        for (String email : assistantsAccounts.keySet()) {
+//            //if assistantsAccounts.keySet()
+//            Assistant password = assistantsAccounts.get(email)
+//
+//            out.write(email + " " + password + " " + TypeOfUsers.ASSISTANT + '\n');
 
 
-            //assistant.getPassword();
-            //assistant.getTypeOfUsers();
+        for (final Map.Entry<String, Assistant> entryEmail : assistantsAccounts.entrySet()) {
+
+            //Assistant password = assistantsAccounts.get(entryEmail);
+            String key = entryEmail.getKey();
+            //Assistant value = entryEmail.getValue();
+//
+            if (key.equals(email)) {
+                out.write(entryEmail.getKey() + " " + entryEmail.getValue().getPassword() + " " + entryEmail.getValue().getTypeOfUsers() + '\n');
+//            //final Map.Entry<String, Assistant> assistantsAccounts;
+//            //out.write(entry.getKey() + " " + entry.getValue().getPassword() + " " + entry.getValue().getTypeOfUsers()+ '\n');
 
 
-            //String password = serviceAccounts.get(email);
-            out.write(serviceAccounts.keySet() + " " + serviceAccounts.values() + " " + assistant.getTypeOfUsers());
+            }
         }
-
         out.close();
+
+//        for (String email : assistantsAccounts.keySet()) {
+//            Assistant assistant = new Assistant();
+//
+//
+//            //assistant.getPassword();
+//            //assistant.getTypeOfUsers();
+//
+//
+//            //String password = serviceAccounts.get(email);
+//            out.write(assistantsAccounts.keySet() + " " + assistantsAccounts.values() + " " + assistant.getTypeOfUsers() + '\n');
+
     }
 
-    //        @Override
+
     public void addFlightToDatabase() throws IOException {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter airport of arrival");
         String airportOfArrival = scanner.nextLine();
         System.out.println("Enter airport of departure");
@@ -121,38 +142,41 @@ public class AdminImplementation {
         String timeOfDeparture = scanner.nextLine();
         System.out.println("Enter number of flight");
         String numberOfFlight = scanner.nextLine();
+        System.out.println("Enter price of flight");
+        BigDecimal priceOfFlight = scanner.nextBigDecimal();
 
-
-
-        flights.add(new Flight(airportOfArrival,airportOfDeparture, timeOfArrival, timeOfDeparture , numberOfFlight));
+        flights.add(new Flight(airportOfArrival, airportOfDeparture, timeOfArrival, timeOfDeparture, numberOfFlight));
         writeFlightsToFile();
         System.out.println(flights);
     }
-        private static void writeFlightsToFile() throws IOException {
 
-            List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\flights.txt"));
+    private static void writeFlightsToFile() throws IOException {
+
+
+        List<String> flightList = Files.readAllLines(Paths.get("C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\flights.txt"));
 //
 
-            BufferedWriter out = new BufferedWriter(new FileWriter("flights.txt"));
+        BufferedWriter out = new BufferedWriter(new FileWriter("flights.txt"));
 
 
-            for (String line : lines) {
-                out.write(line + "\n");
-            }
-            for (Flight flight : flights){
-                out.write(flight.getAirportOfArrival() + ' ' + flight.getAirportOfDeparture() + " "  + flight.getTimeOfArrival() + " " + flight.getTimeOfDeparture() + " " + flight.getNumberOfFlight() + " " + '\n');
-
-            }
-
-            out.close();
+        for (String flight : flightList) {
+            out.write(flight + "\n");
         }
 
+        for (Flight flight : flights) {
+            out.write(flight.getAirportOfArrival() + ' ' + flight.getAirportOfDeparture() + " " + flight.getTimeOfArrival() + " " + flight.getTimeOfDeparture() + " " + flight.getNumberOfFlight() + " " + '\n');
 
-        //List<Flight> flights.txt = Data.getFlights();
+        }
+
+        out.close();
+    }
+
+
+    //List<Flight> flights.txt = Data.getFlights();
 //       exportFlightListToJsonWithGson(flights.txt, "C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\src\\main\\resources\\flights.txt.json");
 
-        //"C:\Users\HP\Documents\PierwszeKrokiZJava\TheBestReservationProgram\src\main\resources\flights.txt.json";
-        //String path = "C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\src\\main\\resources\\flights.txt.json";
+    //"C:\Users\HP\Documents\PierwszeKrokiZJava\TheBestReservationProgram\src\main\resources\flights.txt.json";
+    //String path = "C:\\Users\\HP\\Documents\\PierwszeKrokiZJava\\TheBestReservationProgram\\src\\main\\resources\\flights.txt.json";
 
 //        public static List<Flight> importFlightListFromJsonWithGson(String path) {
 //            Type listType = new TypeToken<List<Flight>>() {}.getType();
@@ -160,7 +184,7 @@ public class AdminImplementation {
 //            Reader reader = new FileReader("flights.txt.json");
 //            List<Shape> result = gson.fromJson(reader, listType);
 //            return result;
-        }
+}
 
 //        public static void exportFlightListToJsonWithGson(List<Flight> listType, String path) throws IOException {
 //            Writer writer = new FileWriter(path);
@@ -175,14 +199,13 @@ public class AdminImplementation {
 //    Writer writer = Files.newBufferedWriter(Paths.get("flight.json"));
 
 
-
-    // create a writer
-
-
-    // convert books object to JSON file
+// create a writer
 
 
-    // close writer
+// convert books object to JSON file
+
+
+// close writer
 //    writer.close();
 //
 //

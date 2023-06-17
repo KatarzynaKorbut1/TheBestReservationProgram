@@ -58,7 +58,7 @@ public class AssistantImplementation {
             flightsList.add(flight);
 
         }
-
+        out.println(flightsList);
         return flightsList;
     }
 

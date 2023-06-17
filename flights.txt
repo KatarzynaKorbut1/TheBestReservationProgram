@@ -1,2 +1,9 @@
 Sztokholm Berlin 14:00 16:00 1234
 Paris Warszawa 17:00 15:30 6321 
+Honolulu  14:00 12:00 1582 
+Honolulu  14:00 12:00 1582 
+3  15 25 258 
+Krakow Honolulu 20:40 18:40 3652 
+KR WA 15:00 14:00 9999 
+KR WA 15:00 14:00 9999 
+WA KA 17:00 16:00 8888 
